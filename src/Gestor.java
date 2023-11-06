@@ -1,16 +1,17 @@
 public class Gestor {
-    public boolean isMutant(String[][] dna) throws InvalidMatrixException {
+    public boolean isMutant(String[] dna) throws InvalidMatrixException {
         int n = dna.length;
         if (n == 0) {
-            throw new InvalidMatrixException("Input matrix is empty");
+            throw new InvalidMatrixException("La matriz no puede estar vacía");
         }
         for (int i = 0; i < n; i++) {
-            if (dna[i].length != n) {
-                throw new InvalidMatrixException("Input matrix is not square");
+            if (dna[i].length() != n) {
+                throw new InvalidMatrixException("La matriz debe ser cuadrada");
             }
             for (int j = 0; j < n; j++) {
-                if (!dna[i][j].matches("[ATCG]")) {
-                    throw new InvalidMatrixException("Input matrix contains invalid characters");
+                char c = dna[i].charAt(j);
+                if (c != 'A' && c != 'C' && c != 'G' && c != 'T') {
+                    throw new InvalidMatrixException("La matriz contiene caracteres inválidos");
                 }
             }
         }
@@ -21,11 +22,11 @@ public class Gestor {
         return count >= 2;
     }
 
-    private int countHorizontal(String[][] dna) {
+    private int countHorizontal(String[] dna) {
         int count = 0;
         for (int i = 0; i < dna.length; i++) {
-            for (int j = 0; j < dna[i].length - 3; j++) {
-                if (dna[i][j].equals(dna[i][j+1]) && dna[i][j].equals(dna[i][j+2]) && dna[i][j].equals(dna[i][j+3])) {
+            for (int j = 0; j < dna[i].length() - 3; j++) {
+                if (dna[i].charAt(j)==dna[i].charAt(j+1) && dna[i].charAt(j)==dna[i].charAt(j+2) && dna[i].charAt(j)==dna[i].charAt(j+3)) {
                     count++;
                 }
             }
@@ -33,11 +34,11 @@ public class Gestor {
         return count;
     }
 
-    private int countVertical(String[][] dna) {
+    private int countVertical(String[] dna) {
         int count = 0;
         for (int i = 0; i < dna.length - 3; i++) {
-            for (int j = 0; j < dna[i].length; j++) {
-                if (dna[i][j].equals(dna[i+1][j]) && dna[i][j].equals(dna[i+2][j]) && dna[i][j].equals(dna[i+3][j])) {
+            for (int j = 0; j < dna[i].length(); j++) {
+                if (dna[i].charAt(j)==dna[i+1].charAt(j) && dna[i].charAt(j)==dna[i+2].charAt(j) && dna[i].charAt(j)==dna[i+3].charAt(j)) {
                     count++;
                 }
             }
@@ -45,18 +46,18 @@ public class Gestor {
         return count;
     }
 
-    private int countDiagonal(String[][] dna) {
+    private int countDiagonal(String[] dna) {
         int count = 0;
         count += countDiagonalTopLeftToBottomRight(dna);
         count += countDiagonalBottomLeftToTopRight(dna);
         return count;
     }
 
-    private int countDiagonalTopLeftToBottomRight(String[][] dna) {
+    private int countDiagonalTopLeftToBottomRight(String[] dna) {
         int count = 0;
         for (int i = 0; i < dna.length - 3; i++) {
-            for (int j = 0; j < dna[i].length - 3; j++) {
-                if (dna[i][j].equals(dna[i+1][j+1]) && dna[i][j].equals(dna[i+2][j+2]) && dna[i][j].equals(dna[i+3][j+3])) {
+            for (int j = 0; j < dna[i].length() - 3; j++) {
+                if (dna[i].charAt(j)==dna[i+1].charAt(j+1) && dna[i].charAt(j)==dna[i+2].charAt(j+2) && dna[i].charAt(j)==dna[i+3].charAt(j+3)) {
                     count++;
                 }
             }
@@ -64,11 +65,11 @@ public class Gestor {
         return count;
     }
 
-    private int countDiagonalBottomLeftToTopRight(String[][] dna) {
+    private int countDiagonalBottomLeftToTopRight(String[] dna) {
         int count = 0;
         for (int i = 3; i < dna.length; i++) {
-            for (int j = 0; j < dna[i].length - 3; j++) {
-                if (dna[i][j].equals(dna[i-1][j+1]) && dna[i][j].equals(dna[i-2][j+2]) && dna[i][j].equals(dna[i-3][j+3])) {
+            for (int j = 0; j < dna[i].length() - 3; j++) {
+                if (dna[i].charAt(j)==dna[i-1].charAt(j+1) && dna[i].charAt(j)==dna[i-2].charAt(j+2) && dna[i].charAt(j)==dna[i-3].charAt(j+3)) {
                     count++;
                 }
             }
